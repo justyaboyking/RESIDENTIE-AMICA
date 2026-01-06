@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Residentie Amica - Een warme thuis</title>
     <meta name="description" content="Residentie Amica: Een warme thuis met zorg op maat. Waar aandacht, rust en respect centraal staan.">
-
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-
+    
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+    
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -34,7 +34,7 @@
                         },
                         accent: {
                             light: '#e6f0eb',
-                            DEFAULT: '#88b09d',
+                            DEFAULT: '#88b09d', // Sage green for calmness
                             dark: '#6a8f7e',
                         }
                     },
@@ -47,18 +47,402 @@
         }
     </script>
     <style>
-        html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+        }
         .hero-pattern {
             background-color: #f0ebe6;
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23a38778' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
-        .fade-in-up { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; transform: translateY(20px); }
-        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-        .card-hover { transition: all 0.3s ease; }
-        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
     </style>
 </head>
 <body class="font-sans text-gray-700 bg-brand-50">
-<!-- CONTENT UNCHANGED -->
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <!-- Logo Placeholder -->
+                    <div class="flex-shrink-0 flex items-center gap-2">
+                        <div class="w-10 h-10 bg-brand-500 rounded-full flex items-center justify-center text-white">
+                            <i data-lucide="heart-handshake" class="w-6 h-6"></i>
+                        </div>
+                        <span class="font-serif text-xl font-bold text-gray-800 tracking-wide">Residentie Amica</span>
+                    </div>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#diensten" class="text-gray-600 hover:text-brand-600 font-medium transition">Diensten</a>
+                    <a href="#afdelingen" class="text-gray-600 hover:text-brand-600 font-medium transition">Afdelingen</a>
+                    <a href="#kamers" class="text-gray-600 hover:text-brand-600 font-medium transition">Kamers & Prijzen</a>
+                    <a href="#contact" class="text-gray-600 hover:text-brand-600 font-medium transition">Contact</a>
+                    <a href="#rondleiding" class="bg-brand-600 hover:bg-brand-700 text-white px-5 py-2.5 rounded-full font-medium transition shadow-md">
+                        Plan een rondleiding
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="flex items-center md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-gray-900 focus:outline-none">
+                        <i data-lucide="menu" class="w-8 h-8"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#diensten" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-700 rounded-md">Diensten</a>
+                <a href="#afdelingen" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-700 rounded-md">Afdelingen</a>
+                <a href="#kamers" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-700 rounded-md">Kamers & Prijzen</a>
+                <a href="#contact" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-700 rounded-md">Contact</a>
+                <a href="#rondleiding" class="block w-full text-center mt-4 bg-brand-600 text-white px-3 py-3 rounded-md font-medium">Plan een rondleiding</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative bg-brand-100 h-[600px] flex items-center justify-center overflow-hidden">
+        <!-- Background Image with Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Oudere mensen genieten van een gesprek" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-r from-brand-900/80 to-brand-800/40 mix-blend-multiply"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto fade-in-up" style="animation-delay: 0.1s;">
+            <h1 class="font-serif text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+                Een warme thuis met <br/> <span class="text-brand-200">zorg op maat</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-white/90 mb-10 font-light max-w-2xl mx-auto">
+                Waar aandacht, rust en respect centraal staan.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#contact" class="bg-white text-brand-800 hover:bg-brand-50 px-8 py-4 rounded-full font-semibold text-lg transition shadow-lg transform hover:scale-105">
+                    Plan een rondleiding
+                </a>
+                <a href="#diensten" class="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-4 rounded-full font-semibold text-lg transition">
+                    Ontdek onze diensten
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Services Section -->
+    <section id="diensten" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-brand-800 mb-4">Onze Diensten</h2>
+                <div class="w-24 h-1 bg-brand-500 mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <!-- Service 1 -->
+                <div class="bg-brand-50 rounded-2xl p-8 text-center card-hover border border-brand-100">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm text-brand-600">
+                        <i data-lucide="home" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl font-semibold text-gray-800 mb-4">Wonen & Leven</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Rustig wonen met ruimte voor privacy én ontmoeting. Bij ons gaat wonen om meer dan een kamer. Het draait om rust, veiligheid en je thuis voelen.
+                    </p>
+                    <a href="#" class="inline-flex items-center text-brand-600 font-medium hover:text-brand-800">
+                        Ontdek hoe wonen voelt <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="bg-brand-50 rounded-2xl p-8 text-center card-hover border border-brand-100">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm text-brand-600">
+                        <i data-lucide="heart-pulse" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl font-semibold text-gray-800 mb-4">Zorg & Begeleiding</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Persoonlijke zorg, afgestemd op elke bewoner. Met vaste gezichten, deskundigheid en aandacht voor lichaam én gevoel.
+                    </p>
+                    <a href="#" class="inline-flex items-center text-brand-600 font-medium hover:text-brand-800">
+                        Lees meer over onze zorg <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="bg-brand-50 rounded-2xl p-8 text-center card-hover border border-brand-100">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm text-brand-600">
+                        <i data-lucide="music" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl font-semibold text-gray-800 mb-4">Activiteiten & Animatie</h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Dagelijkse activiteiten, aangepast aan elke bewoner. Samen waar het kan, individueel waar nodig.
+                    </p>
+                    <a href="#" class="inline-flex items-center text-brand-600 font-medium hover:text-brand-800">
+                        Bekijk onze activiteiten <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Departments Section -->
+    <section id="afdelingen" class="py-20 hero-pattern">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-brand-800 mb-4">Onze Afdelingen</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Elke afdeling heeft zijn eigen karakter, afgestemd op de specifieke noden van onze bewoners.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Dept 1 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition group h-full flex flex-col">
+                    <div class="h-40 bg-blue-100 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Avontuur" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition duration-500">
+                        <div class="absolute inset-0 bg-blue-900/20"></div>
+                        <div class="absolute bottom-3 left-3 bg-white/90 px-3 py-1 rounded-md text-xs font-bold text-blue-800 uppercase tracking-wider">Zelfstandig</div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <h3 class="font-serif text-xl font-bold text-gray-800 mb-2">Avonturenplein</h3>
+                        <p class="text-sm text-gray-600 mb-4 flex-grow">Voor bewoners die grotendeels zelfstandig wonen in een actieve en sociale omgeving.</p>
+                        <button class="text-blue-600 font-medium text-sm flex items-center mt-auto">Ontdek afdeling <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i></button>
+                    </div>
+                </div>
+
+                <!-- Dept 2 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition group h-full flex flex-col">
+                    <div class="h-40 bg-green-100 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Reizen" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition duration-500">
+                        <div class="absolute inset-0 bg-green-900/20"></div>
+                        <div class="absolute bottom-3 left-3 bg-white/90 px-3 py-1 rounded-md text-xs font-bold text-green-800 uppercase tracking-wider">Zelfstandig</div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <h3 class="font-serif text-xl font-bold text-gray-800 mb-2">Reis en Ontdekking</h3>
+                        <p class="text-sm text-gray-600 mb-4 flex-grow">Zelfstandige afdeling met ruimte voor ontmoeting, activiteiten en beleving.</p>
+                        <button class="text-green-600 font-medium text-sm flex items-center mt-auto">Lees meer <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i></button>
+                    </div>
+                </div>
+
+                <!-- Dept 3 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition group h-full flex flex-col">
+                    <div class="h-40 bg-purple-100 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1534349762913-96c22b67bf63?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Herinneringen" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition duration-500">
+                        <div class="absolute inset-0 bg-purple-900/20"></div>
+                        <div class="absolute bottom-3 left-3 bg-white/90 px-3 py-1 rounded-md text-xs font-bold text-purple-800 uppercase tracking-wider">Dementiezorg</div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <h3 class="font-serif text-xl font-bold text-gray-800 mb-2">Hof van Herinneringen</h3>
+                        <p class="text-sm text-gray-600 mb-4 flex-grow">Beschermde afdeling voor bewoners met dementie, met structuur, herkenbaarheid en warme begeleiding.</p>
+                        <button class="text-purple-600 font-medium text-sm flex items-center mt-auto">Bekijk afdeling <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i></button>
+                    </div>
+                </div>
+
+                <!-- Dept 4 -->
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition group h-full flex flex-col">
+                    <div class="h-40 bg-orange-100 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1516733968668-dbdce39c4651?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Intensieve Zorg" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition duration-500">
+                        <div class="absolute inset-0 bg-orange-900/20"></div>
+                        <div class="absolute bottom-3 left-3 bg-white/90 px-3 py-1 rounded-md text-xs font-bold text-orange-800 uppercase tracking-wider">Intensieve Zorg</div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <h3 class="font-serif text-xl font-bold text-gray-800 mb-2">Zilveren Oase</h3>
+                        <p class="text-sm text-gray-600 mb-4 flex-grow">Zorg met nabijheid en comfort voor bewoners met een hogere zorgnood.</p>
+                        <button class="text-orange-600 font-medium text-sm flex items-center mt-auto">Meer info <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="kamers" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row gap-16">
+                
+                <!-- Pricing Content -->
+                <div class="lg:w-1/2">
+                    <h2 class="font-serif text-3xl md:text-4xl font-bold text-brand-800 mb-6">Kamers & Prijzen</h2>
+                    <p class="text-gray-600 text-lg mb-8 leading-relaxed">
+                        Wij bieden comfortabele woonoplossingen die aansluiten bij uw behoeften. Onze kamers zijn licht, ruim en voorzien van alle moderne gemakken.
+                    </p>
+                    
+                    <div class="bg-brand-50 p-6 rounded-xl border border-brand-100 mb-8">
+                        <h4 class="font-serif text-xl font-bold text-brand-700 mb-4 flex items-center">
+                            <i data-lucide="plus-circle" class="w-5 h-5 mr-2"></i>
+                            Extra Diensten & Ondersteuning
+                        </h4>
+                        <ul class="grid grid-cols-2 gap-y-2 text-gray-700">
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-accent"></i> Kapper</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-accent"></i> Pedicure</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-accent"></i> Therapie</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-accent"></i> Logopedie</li>
+                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-accent"></i> Animatie</li>
+                        </ul>
+                        <p class="text-sm text-gray-500 mt-4 italic">
+                            * Deze diensten zijn beschikbaar op afspraak en afgestemd op de noden van de bewoner.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Cards -->
+                <div class="lg:w-1/2 flex flex-col gap-6">
+                    <!-- Room 1 -->
+                    <div class="border border-gray-200 rounded-xl p-6 shadow-sm hover:border-brand-300 transition relative overflow-hidden">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="font-serif text-2xl font-bold text-gray-800">Comfortkamer</h3>
+                                <span class="text-sm text-gray-500 uppercase tracking-wide">1-Persoons</span>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-2xl font-bold text-brand-600">€60 - €90</p>
+                                <p class="text-xs text-gray-500">per dag</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-gray-600">
+                            <li class="flex items-center"><i data-lucide="bath" class="w-4 h-4 mr-3 text-brand-400"></i> Eigen badkamer</li>
+                            <li class="flex items-center"><i data-lucide="sun" class="w-4 h-4 mr-3 text-brand-400"></i> Comfortabele kamer</li>
+                            <li class="flex items-center"><i data-lucide="archive" class="w-4 h-4 mr-3 text-brand-400"></i> Opbergruimte</li>
+                            <li class="flex items-center"><i data-lucide="lamp" class="w-4 h-4 mr-3 text-brand-400"></i> Ingerichte basisvoorzieningen</li>
+                        </ul>
+                        <button class="w-full border border-brand-600 text-brand-600 font-semibold py-2 rounded-lg hover:bg-brand-600 hover:text-white transition">Bekijk kamer</button>
+                    </div>
+
+                    <!-- Room 2 -->
+                    <div class="border-2 border-brand-200 bg-brand-50/50 rounded-xl p-6 shadow-md relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-brand-500 text-white text-xs px-3 py-1 rounded-bl-lg">Populair voor koppels</div>
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="font-serif text-2xl font-bold text-gray-800">Duo Kamer</h3>
+                                <span class="text-sm text-gray-500 uppercase tracking-wide">2-Persoons</span>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-2xl font-bold text-brand-600">€100 - €120</p>
+                                <p class="text-xs text-gray-500">per dag</p>
+                            </div>
+                        </div>
+                        <ul class="space-y-2 mb-6 text-gray-600">
+                            <li class="flex items-center"><i data-lucide="maximize" class="w-4 h-4 mr-3 text-brand-400"></i> Ruimere kamer</li>
+                            <li class="flex items-center"><i data-lucide="sofa" class="w-4 h-4 mr-3 text-brand-400"></i> Extra leefruimte</li>
+                            <li class="flex items-center"><i data-lucide="users" class="w-4 h-4 mr-3 text-brand-400"></i> Geschikt voor twee personen</li>
+                            <li class="flex items-center"><i data-lucide="accessibility" class="w-4 h-4 mr-3 text-brand-400"></i> Aangepaste badkamer</li>
+                        </ul>
+                        <button class="w-full bg-brand-600 text-white font-semibold py-2 rounded-lg hover:bg-brand-700 transition">Bekijk kamer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="bg-brand-900 text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                
+                <!-- Info -->
+                <div>
+                    <h2 class="font-serif text-3xl font-bold mb-6 text-white">Contact & Bezoek</h2>
+                    <p class="text-brand-200 mb-8 max-w-md">
+                        Heeft u vragen of wilt u de sfeer komen opsnuiven? Wij staan klaar om u te verwelkomen.
+                    </p>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="bg-brand-800 p-3 rounded-full mr-4">
+                                <i data-lucide="clock" class="w-6 h-6 text-brand-200"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-brand-100">Openingsuren</h4>
+                                <p class="text-brand-300">Maandag tot vrijdag: 08:00 – 19:00</p>
+                                <p class="text-brand-300">Weekend en feestdagen: 10:00 – 14:00</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-brand-800 p-3 rounded-full mr-4">
+                                <i data-lucide="map-pin" class="w-6 h-6 text-brand-200"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-brand-100">Adres</h4>
+                                <p class="text-brand-300">Avonturenlaan 17</p>
+                                <p class="text-brand-300">1000 Wommelgem</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-brand-800 p-3 rounded-full mr-4">
+                                <i data-lucide="mail" class="w-6 h-6 text-brand-200"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-semibold text-brand-100">Contact</h4>
+                                <a href="mailto:info@residentie-amica.be" class="text-brand-300 hover:text-white transition">info@residentie-amica.be</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form Mockup -->
+                <div class="bg-white/5 p-8 rounded-2xl border border-white/10">
+                    <form class="space-y-4" onsubmit="event.preventDefault(); alert('Bedankt voor uw bericht! We nemen spoedig contact met u op.');">
+                        <div>
+                            <label class="block text-sm font-medium text-brand-200 mb-1">Naam</label>
+                            <input type="text" class="w-full bg-brand-800/50 border border-brand-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-brand-400 placeholder-brand-500/50" placeholder="Uw naam">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-brand-200 mb-1">E-mailadres</label>
+                            <input type="email" class="w-full bg-brand-800/50 border border-brand-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-brand-400 placeholder-brand-500/50" placeholder="uw@email.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-brand-200 mb-1">Bericht</label>
+                            <textarea rows="3" class="w-full bg-brand-800/50 border border-brand-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-brand-400 placeholder-brand-500/50" placeholder="Waarmee kunnen we u helpen?"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-accent hover:bg-accent-dark text-white font-bold py-3 rounded-lg transition transform active:scale-95 shadow-lg">
+                            Neem contact op
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-950 text-brand-400 py-8 border-t border-brand-900">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="font-serif italic text-lg mb-4 text-brand-300">
+                "Residentie Amica is een plek waar wonen rust geeft en zorg gebeurt met aandacht."
+            </p>
+            <p class="text-sm opacity-60">© 2024 Residentie Amica. Alle rechten voorbehouden.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+    </script>
 </body>
 </html>
+
+
