@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Residentie Amica - Een warme thuis</title>
+    <meta name="description" content="Residentie Amica: Een warme thuis met zorg op maat. Waar aandacht, rust en respect centraal staan.">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f9f7f5',
+                            100: '#f0ebe6',
+                            200: '#e0d6cd',
+                            300: '#cbbdb0',
+                            400: '#b6a192',
+                            500: '#a38778',
+                            600: '#8c6e61',
+                            700: '#75594f',
+                            800: '#604a43',
+                            900: '#503e3a',
+                        },
+                        accent: {
+                            light: '#e6f0eb',
+                            DEFAULT: '#88b09d',
+                            dark: '#6a8f7e',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Lora', 'serif'],
+                        sans: ['Open Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        .hero-pattern {
+            background-color: #f0ebe6;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23a38778' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .fade-in-up { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; transform: translateY(20px); }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+    </style>
+</head>
+<body class="font-sans text-gray-700 bg-brand-50">
+<!-- CONTENT UNCHANGED -->
+</body>
+</html>
