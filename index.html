@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="nl" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Gebruik Lora voor een warmere, klassieke leeservaring en Montserrat voor vriendelijke titels -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -20,426 +23,556 @@
             theme: {
                 extend: {
                     colors: {
+                        // Terug naar het warme, huiselijke palet
                         brand: {
-                            50: '#f9f7f5',
-                            100: '#f0ebe6',
-                            200: '#e0d6cd',
-                            300: '#cbbdb0',
-                            400: '#b6a192',
-                            500: '#a38778',
-                            600: '#8c6e61',
-                            700: '#75594f',
-                            800: '#604a43',
-                            900: '#503e3a',
+                            50: '#f9f7f5',   // Heel licht warm wit
+                            100: '#f0ebe6',  // Zacht beige
+                            200: '#e0d6cd',  // Linnen
+                            300: '#cbbdb0',  // Zand
+                            400: '#b6a192',  // Taupe
+                            500: '#a38778',  // Warme aarde / Terracotta (Primaire kleur)
+                            600: '#8c6e61',  // Kastanje
+                            700: '#75594f',  // Donkerbruin
+                            800: '#604a43',  // Koffie
+                            900: '#503e3a',  // Diep donkerbruin
                         },
-                        accent: {
-                            light: '#e6f0eb',
-                            DEFAULT: '#88b09d', // Sage green for calmness
-                            dark: '#6a8f7e',
+                        cream: {
+                            50: '#fffdfa',
+                            100: '#fdfbf7',
+                            200: '#f6f1eb',
                         }
                     },
                     fontFamily: {
-                        serif: ['Lora', 'serif'],
-                        sans: ['Open Sans', 'sans-serif'],
+                        serif: ['"Lora"', 'serif'],
+                        sans: ['"Montserrat"', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        // Een subtiele, warme papieren textuur
+                        'warm-noise': "url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.08%22 fill=%22%23a38778%22/%3E%3C/svg%3E')",
+                    },
+                    boxShadow: {
+                        'soft': '0 20px 40px -15px rgba(163, 135, 120, 0.15)',
+                        'glow': '0 0 20px rgba(163, 135, 120, 0.1)',
                     }
                 }
             }
         }
     </script>
     <style>
-        html {
-            scroll-behavior: smooth;
+        /* Sfeer & Textuur */
+        body {
+            background-color: #f9f7f5;
         }
-        .hero-pattern {
-            background-color: #f0ebe6;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23a38778' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        
+        /* Zachte scrollbar in brand kleuren */
+        ::-webkit-scrollbar {
+            width: 10px;
         }
-        .fade-in-up {
-            animation: fadeInUp 0.8s ease-out forwards;
+        ::-webkit-scrollbar-track {
+            background: #f0ebe6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbbdb0;
+            border-radius: 5px;
+            border: 2px solid #f0ebe6;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a38778;
+        }
+
+        /* Animaties: Iets speelser en zachter */
+        .reveal {
             opacity: 0;
             transform: translateY(20px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
-        .card-hover {
-            transition: all 0.3s ease;
+
+        .stagger-delay-1 { transition-delay: 100ms; }
+        .stagger-delay-2 { transition-delay: 200ms; }
+        .stagger-delay-3 { transition-delay: 300ms; }
+
+        /* Organische vormen */
+        .organic-radius {
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            transition: border-radius 0.5s ease;
         }
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        .organic-radius:hover {
+            border-radius: 50% 50% 30% 70% / 50% 40% 60% 40%;
+        }
+
+        /* Foto rand stijl */
+        .photo-frame {
+            position: relative;
+        }
+        .photo-frame::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border: 1px solid rgba(163, 135, 120, 0.3);
+            border-radius: 24px;
+            z-index: -1;
+            transform: rotate(-2deg);
+            transition: transform 0.3s ease;
+        }
+        .photo-frame:hover::before {
+            transform: rotate(0deg);
+        }
+
+        /* Warme overlay voor sfeer */
+        .texture-overlay {
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23a38778' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
         }
     </style>
 </head>
-<body class="font-sans text-gray-700 bg-brand-50">
+<body class="font-sans text-brand-800 bg-brand-50 antialiased selection:bg-brand-200 selection:text-brand-900">
+    <div class="texture-overlay"></div>
 
     <!-- Navigation -->
-    <nav class="bg-white shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20">
-                <div class="flex items-center">
-                    <!-- Logo Placeholder -->
-                    <div class="flex-shrink-0 flex items-center gap-2">
-                        <div class="w-10 h-10 bg-brand-500 rounded-full flex items-center justify-center text-white">
-                            <i data-lucide="heart-handshake" class="w-6 h-6"></i>
-                        </div>
-                        <span class="font-serif text-xl font-bold text-gray-800 tracking-wide">Residentie Amica</span>
+    <nav class="fixed w-full z-[60] transition-all duration-300 py-4" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="bg-white/80 backdrop-blur-md rounded-full shadow-soft px-6 py-3 flex justify-between items-center border border-brand-100">
+                <!-- Logo -->
+                <a href="#" class="group flex items-center gap-3">
+                    <div class="relative w-10 h-10 bg-brand-500 rounded-full flex items-center justify-center text-white shadow-lg group-hover:bg-brand-600 transition-colors duration-300">
+                        <i data-lucide="heart-handshake" class="w-5 h-5"></i>
                     </div>
-                </div>
-                
+                    <div class="flex flex-col">
+                        <span class="font-serif text-xl font-semibold tracking-wide text-brand-900">Residentie Amica</span>
+                    </div>
+                </a>
+
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#diensten" class="text-gray-600 hover:text-brand-600 font-medium transition">Diensten</a>
-                    <a href="#afdelingen" class="text-gray-600 hover:text-brand-600 font-medium transition">Afdelingen</a>
-                    <a href="#kamers" class="text-gray-600 hover:text-brand-600 font-medium transition">Kamers & Prijzen</a>
-                    <a href="#contact" class="text-gray-600 hover:text-brand-600 font-medium transition">Contact</a>
-                    <a href="#rondleiding" class="bg-brand-600 hover:bg-brand-700 text-white px-5 py-2.5 rounded-full font-medium transition shadow-md">
-                        Plan een rondleiding
+                    <a href="#diensten" class="text-sm font-medium text-brand-700 hover:text-brand-500 transition-colors">Over ons</a>
+                    <a href="#afdelingen" class="text-sm font-medium text-brand-700 hover:text-brand-500 transition-colors">Afdelingen</a>
+                    <a href="#kamers" class="text-sm font-medium text-brand-700 hover:text-brand-500 transition-colors">Prijzen</a>
+                    <a href="#contact" class="text-sm font-medium text-brand-700 hover:text-brand-500 transition-colors">Contact</a>
+                    
+                    <a href="#rondleiding" class="bg-brand-800 text-white px-6 py-2.5 rounded-full font-medium text-sm hover:bg-brand-700 transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5">
+                        Plan bezoek
                     </a>
                 </div>
 
-                <!-- Mobile Menu Button -->
-                <div class="flex items-center md:hidden">
-                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-gray-900 focus:outline-none">
-                        <i data-lucide="menu" class="w-8 h-8"></i>
-                    </button>
-                </div>
+                <!-- Mobile Menu Toggle -->
+                <button id="mobile-menu-btn" class="md:hidden text-brand-800 p-2">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
             </div>
         </div>
 
-        <!-- Mobile Menu Panel -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#diensten" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-700 rounded-md">Diensten</a>
-                <a href="#afdelingen" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-700 rounded-md">Afdelingen</a>
-                <a href="#kamers" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-700 rounded-md">Kamers & Prijzen</a>
-                <a href="#contact" class="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-700 rounded-md">Contact</a>
-                <a href="#rondleiding" class="block w-full text-center mt-4 bg-brand-600 text-white px-3 py-3 rounded-md font-medium">Plan een rondleiding</a>
-            </div>
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="fixed inset-0 bg-brand-50 z-50 transform translate-x-full transition-transform duration-500 flex flex-col justify-center items-center gap-8 md:hidden">
+            <button id="close-menu-btn" class="absolute top-8 right-8 text-brand-800 bg-white p-2 rounded-full shadow-sm">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <a href="#diensten" class="font-serif text-3xl text-brand-900 hover:text-brand-600 italic mobile-link">Over ons</a>
+            <a href="#afdelingen" class="font-serif text-3xl text-brand-900 hover:text-brand-600 italic mobile-link">Afdelingen</a>
+            <a href="#kamers" class="font-serif text-3xl text-brand-900 hover:text-brand-600 italic mobile-link">Kamers</a>
+            <a href="#contact" class="font-serif text-3xl text-brand-900 hover:text-brand-600 italic mobile-link">Contact</a>
+            <a href="#rondleiding" class="mt-4 bg-brand-600 text-white px-8 py-4 rounded-full font-serif text-xl mobile-link shadow-lg">Plan een rondleiding</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <header class="relative bg-brand-100 h-[600px] flex items-center justify-center overflow-hidden">
-        <!-- Background Image with Overlay -->
-        <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" alt="Oudere mensen genieten van een gesprek" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-r from-brand-900/80 to-brand-800/40 mix-blend-multiply"></div>
-        </div>
+    <header class="relative min-h-screen flex items-center pt-24 overflow-hidden bg-brand-50">
+        <!-- Organic Background Blob -->
+        <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-100 rounded-full blur-3xl opacity-60 -translate-y-1/3 translate-x-1/4 z-0"></div>
+        <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-brand-200 rounded-full blur-3xl opacity-40 translate-y-1/3 -translate-x-1/4 z-0"></div>
 
-        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto fade-in-up" style="animation-delay: 0.1s;">
-            <h1 class="font-serif text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
-                Een warme thuis met <br/> <span class="text-brand-200">zorg op maat</span>
-            </h1>
-            <p class="text-xl md:text-2xl text-white/90 mb-10 font-light max-w-2xl mx-auto">
-                Waar aandacht, rust en respect centraal staan.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="#contact" class="bg-white text-brand-800 hover:bg-brand-50 px-8 py-4 rounded-full font-semibold text-lg transition shadow-lg transform hover:scale-105">
-                    Plan een rondleiding
-                </a>
-                <a href="#diensten" class="bg-transparent border-2 border-white text-white hover:bg-white/10 px-8 py-4 rounded-full font-semibold text-lg transition">
-                    Ontdek onze diensten
-                </a>
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 w-full">
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Text Content -->
+                <div class="lg:col-span-5 space-y-8 reveal active text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-brand-200 shadow-sm mx-auto lg:mx-0">
+                        <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-brand-600">Welkom thuis</span>
+                    </div>
+                    
+                    <h1 class="font-serif text-5xl md:text-6xl lg:text-7xl text-brand-900 leading-[1.1] tracking-tight">
+                        Een warme thuis met <span class="italic text-brand-500 relative inline-block">zorg op maat.
+                            <svg class="absolute w-full h-3 -bottom-1 left-0 text-brand-200 -z-10" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none" opacity="0.6"/></svg>
+                        </span>
+                    </h1>
+                    
+                    <p class="text-lg text-brand-700 leading-relaxed font-light max-w-lg mx-auto lg:mx-0">
+                        Waar aandacht, rust en respect centraal staan. Een plek waar u zichzelf mag zijn en waar we zorgen voor elkaar.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4 pt-4 justify-center lg:justify-start">
+                        <a href="#rondleiding" class="px-8 py-4 bg-brand-800 text-brand-50 rounded-full font-serif italic text-lg shadow-lg hover:bg-brand-700 hover:shadow-xl transition-all hover:-translate-y-1">
+                            Plan een rondleiding
+                        </a>
+                        <a href="#diensten" class="px-8 py-4 bg-white border border-brand-200 text-brand-800 rounded-full font-serif text-lg hover:bg-brand-50 transition-colors shadow-sm">
+                            Ontdek meer
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hero Image Composition -->
+                <div class="lg:col-span-7 relative reveal stagger-delay-2 active mt-8 lg:mt-0">
+                    <div class="relative z-10 mx-auto max-w-md lg:max-w-full">
+                        <div class="photo-frame bg-white p-3 shadow-2xl rounded-[30px] rotate-1 hover:rotate-0 transition-transform duration-500">
+                            <div class="rounded-[20px] overflow-hidden aspect-[4/3] lg:aspect-[5/4]">
+                                <img src="https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Gelukkige bewoonster" class="w-full h-full object-cover hover:scale-105 transition-transform duration-1000">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Decorative Element: Organic shape behind -->
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] border-2 border-brand-300/30 rounded-full z-0 animate-spin-slow pointer-events-none" style="animation-duration: 30s; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 opacity-60 animate-bounce cursor-pointer" onclick="document.getElementById('diensten').scrollIntoView()">
+            <span class="text-[10px] font-bold uppercase tracking-widest text-brand-800">Ontdek</span>
+            <div class="w-8 h-8 rounded-full border border-brand-400 flex items-center justify-center text-brand-600 bg-white/50">
+                <i data-lucide="arrow-down" class="w-4 h-4"></i>
             </div>
         </div>
     </header>
 
-    <!-- Services Section -->
-    <section id="diensten" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="font-serif text-3xl md:text-4xl font-bold text-brand-800 mb-4">Onze Diensten</h2>
-                <div class="w-24 h-1 bg-brand-500 mx-auto"></div>
+    <!-- Services: Warm & Personable -->
+    <section id="diensten" class="py-24 bg-cream-50 relative">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-brand-500 font-serif italic text-2xl">Onze Belofte</span>
+                <h2 class="mt-2 text-4xl md:text-5xl font-serif text-brand-900">Wat mag je verwachten?</h2>
+                <div class="w-24 h-1.5 bg-brand-300 rounded-full mx-auto mt-6"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                <!-- Service 1 -->
-                <div class="bg-brand-50 rounded-2xl p-8 text-center card-hover border border-brand-100">
-                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm text-brand-600">
-                        <i data-lucide="home" class="w-8 h-8"></i>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Item 1 -->
+                <div class="bg-white p-8 rounded-[2rem] shadow-soft hover:shadow-lg transition-all duration-300 border border-brand-100 group reveal stagger-delay-1 hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-brand-100 rounded-2xl flex items-center justify-center text-brand-600 mb-6 group-hover:bg-brand-500 group-hover:text-white transition-colors rotate-3 group-hover:rotate-0">
+                        <i data-lucide="home" class="w-7 h-7"></i>
                     </div>
-                    <h3 class="font-serif text-2xl font-semibold text-gray-800 mb-4">Wonen & Leven</h3>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
-                        Rustig wonen met ruimte voor privacy én ontmoeting. Bij ons gaat wonen om meer dan een kamer. Het draait om rust, veiligheid en je thuis voelen.
+                    <h3 class="font-serif text-xl font-bold text-brand-900 mb-3">Huiselijke Sfeer</h3>
+                    <p class="text-brand-700 leading-relaxed text-sm">
+                        Bij ons kom je terecht in een omgeving waar wonen aanvoelt als thuiskomen. Rust, veiligheid en een familiaal gevoel staan centraal.
                     </p>
-                    <a href="#" class="inline-flex items-center text-brand-600 font-medium hover:text-brand-800">
-                        Ontdek hoe wonen voelt <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
-                    </a>
                 </div>
 
-                <!-- Service 2 -->
-                <div class="bg-brand-50 rounded-2xl p-8 text-center card-hover border border-brand-100">
-                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm text-brand-600">
-                        <i data-lucide="heart-pulse" class="w-8 h-8"></i>
+                <!-- Item 2 -->
+                <div class="bg-white p-8 rounded-[2rem] shadow-soft hover:shadow-lg transition-all duration-300 border border-brand-100 group reveal stagger-delay-2 hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-brand-100 rounded-2xl flex items-center justify-center text-brand-600 mb-6 group-hover:bg-brand-500 group-hover:text-white transition-colors -rotate-2 group-hover:rotate-0">
+                        <i data-lucide="heart-handshake" class="w-7 h-7"></i>
                     </div>
-                    <h3 class="font-serif text-2xl font-semibold text-gray-800 mb-4">Zorg & Begeleiding</h3>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
-                        Persoonlijke zorg, afgestemd op elke bewoner. Met vaste gezichten, deskundigheid en aandacht voor lichaam én gevoel.
+                    <h3 class="font-serif text-xl font-bold text-brand-900 mb-3">Zorg op Maat</h3>
+                    <p class="text-brand-700 leading-relaxed text-sm">
+                        Professionele en persoonlijke zorg, afgestemd op de noden van elke bewoner. Van lichte ondersteuning tot gespecialiseerde verpleging.
                     </p>
-                    <a href="#" class="inline-flex items-center text-brand-600 font-medium hover:text-brand-800">
-                        Lees meer over onze zorg <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
-                    </a>
                 </div>
 
-                <!-- Service 3 -->
-                <div class="bg-brand-50 rounded-2xl p-8 text-center card-hover border border-brand-100">
-                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm text-brand-600">
-                        <i data-lucide="music" class="w-8 h-8"></i>
+                <!-- Item 3 -->
+                <div class="bg-white p-8 rounded-[2rem] shadow-soft hover:shadow-lg transition-all duration-300 border border-brand-100 group reveal stagger-delay-1 hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-brand-100 rounded-2xl flex items-center justify-center text-brand-600 mb-6 group-hover:bg-brand-500 group-hover:text-white transition-colors rotate-2 group-hover:rotate-0">
+                        <i data-lucide="palette" class="w-7 h-7"></i>
                     </div>
-                    <h3 class="font-serif text-2xl font-semibold text-gray-800 mb-4">Activiteiten & Animatie</h3>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
-                        Dagelijkse activiteiten, aangepast aan elke bewoner. Samen waar het kan, individueel waar nodig.
+                    <h3 class="font-serif text-xl font-bold text-brand-900 mb-3">Leven & Beleving</h3>
+                    <p class="text-brand-700 leading-relaxed text-sm">
+                        Een gevarieerd aanbod aan activiteiten, aangepast aan mogelijkheden en interesses. Voor actieve bewoners én bewoners met dementie.
                     </p>
-                    <a href="#" class="inline-flex items-center text-brand-600 font-medium hover:text-brand-800">
-                        Bekijk onze activiteiten <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Departments Section -->
-    <section id="afdelingen" class="py-20 hero-pattern">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="font-serif text-3xl md:text-4xl font-bold text-brand-800 mb-4">Onze Afdelingen</h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">Elke afdeling heeft zijn eigen karakter, afgestemd op de specifieke noden van onze bewoners.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Dept 1 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition group h-full flex flex-col">
-                    <div class="h-40 bg-blue-100 relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Avontuur" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition duration-500">
-                        <div class="absolute inset-0 bg-blue-900/20"></div>
-                        <div class="absolute bottom-3 left-3 bg-white/90 px-3 py-1 rounded-md text-xs font-bold text-blue-800 uppercase tracking-wider">Zelfstandig</div>
-                    </div>
-                    <div class="p-6 flex-grow flex flex-col">
-                        <h3 class="font-serif text-xl font-bold text-gray-800 mb-2">Avonturenplein</h3>
-                        <p class="text-sm text-gray-600 mb-4 flex-grow">Voor bewoners die grotendeels zelfstandig wonen in een actieve en sociale omgeving.</p>
-                        <button class="text-blue-600 font-medium text-sm flex items-center mt-auto">Ontdek afdeling <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i></button>
-                    </div>
                 </div>
 
-                <!-- Dept 2 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition group h-full flex flex-col">
-                    <div class="h-40 bg-green-100 relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Reizen" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition duration-500">
-                        <div class="absolute inset-0 bg-green-900/20"></div>
-                        <div class="absolute bottom-3 left-3 bg-white/90 px-3 py-1 rounded-md text-xs font-bold text-green-800 uppercase tracking-wider">Zelfstandig</div>
+                <!-- Item 4 -->
+                <div class="bg-white p-8 rounded-[2rem] shadow-soft hover:shadow-lg transition-all duration-300 border border-brand-100 group reveal stagger-delay-2 hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-brand-100 rounded-2xl flex items-center justify-center text-brand-600 mb-6 group-hover:bg-brand-500 group-hover:text-white transition-colors -rotate-3 group-hover:rotate-0">
+                        <i data-lucide="coffee" class="w-7 h-7"></i>
                     </div>
-                    <div class="p-6 flex-grow flex flex-col">
-                        <h3 class="font-serif text-xl font-bold text-gray-800 mb-2">Reis en Ontdekking</h3>
-                        <p class="text-sm text-gray-600 mb-4 flex-grow">Zelfstandige afdeling met ruimte voor ontmoeting, activiteiten en beleving.</p>
-                        <button class="text-green-600 font-medium text-sm flex items-center mt-auto">Lees meer <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i></button>
-                    </div>
-                </div>
-
-                <!-- Dept 3 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition group h-full flex flex-col">
-                    <div class="h-40 bg-purple-100 relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1534349762913-96c22b67bf63?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Herinneringen" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition duration-500">
-                        <div class="absolute inset-0 bg-purple-900/20"></div>
-                        <div class="absolute bottom-3 left-3 bg-white/90 px-3 py-1 rounded-md text-xs font-bold text-purple-800 uppercase tracking-wider">Dementiezorg</div>
-                    </div>
-                    <div class="p-6 flex-grow flex flex-col">
-                        <h3 class="font-serif text-xl font-bold text-gray-800 mb-2">Hof van Herinneringen</h3>
-                        <p class="text-sm text-gray-600 mb-4 flex-grow">Beschermde afdeling voor bewoners met dementie, met structuur, herkenbaarheid en warme begeleiding.</p>
-                        <button class="text-purple-600 font-medium text-sm flex items-center mt-auto">Bekijk afdeling <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i></button>
-                    </div>
-                </div>
-
-                <!-- Dept 4 -->
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition group h-full flex flex-col">
-                    <div class="h-40 bg-orange-100 relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1516733968668-dbdce39c4651?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Intensieve Zorg" class="w-full h-full object-cover opacity-80 group-hover:scale-110 transition duration-500">
-                        <div class="absolute inset-0 bg-orange-900/20"></div>
-                        <div class="absolute bottom-3 left-3 bg-white/90 px-3 py-1 rounded-md text-xs font-bold text-orange-800 uppercase tracking-wider">Intensieve Zorg</div>
-                    </div>
-                    <div class="p-6 flex-grow flex flex-col">
-                        <h3 class="font-serif text-xl font-bold text-gray-800 mb-2">Zilveren Oase</h3>
-                        <p class="text-sm text-gray-600 mb-4 flex-grow">Zorg met nabijheid en comfort voor bewoners met een hogere zorgnood.</p>
-                        <button class="text-orange-600 font-medium text-sm flex items-center mt-auto">Meer info <i data-lucide="chevron-right" class="w-4 h-4 ml-1"></i></button>
-                    </div>
+                    <h3 class="font-serif text-xl font-bold text-brand-900 mb-3">Culinaire Zorg</h3>
+                    <p class="text-brand-700 leading-relaxed text-sm">
+                        Aandacht voor lekker eten, dagritme en kleine verwenmomenten. Vers bereide maaltijden die zorgen voor comfort en gezelligheid.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Pricing Section -->
-    <section id="kamers" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col lg:flex-row gap-16">
-                
-                <!-- Pricing Content -->
-                <div class="lg:w-1/2">
-                    <h2 class="font-serif text-3xl md:text-4xl font-bold text-brand-800 mb-6">Kamers & Prijzen</h2>
-                    <p class="text-gray-600 text-lg mb-8 leading-relaxed">
-                        Wij bieden comfortabele woonoplossingen die aansluiten bij uw behoeften. Onze kamers zijn licht, ruim en voorzien van alle moderne gemakken.
-                    </p>
-                    
-                    <div class="bg-brand-50 p-6 rounded-xl border border-brand-100 mb-8">
-                        <h4 class="font-serif text-xl font-bold text-brand-700 mb-4 flex items-center">
-                            <i data-lucide="plus-circle" class="w-5 h-5 mr-2"></i>
-                            Extra Diensten & Ondersteuning
-                        </h4>
-                        <ul class="grid grid-cols-2 gap-y-2 text-gray-700">
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-accent"></i> Kapper</li>
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-accent"></i> Pedicure</li>
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-accent"></i> Therapie</li>
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-accent"></i> Logopedie</li>
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-accent"></i> Animatie</li>
-                        </ul>
-                        <p class="text-sm text-gray-500 mt-4 italic">
-                            * Deze diensten zijn beschikbaar op afspraak en afgestemd op de noden van de bewoner.
-                        </p>
+    <!-- Departments: Photo Album Style -->
+    <section id="afdelingen" class="py-24 bg-brand-50 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-20 reveal">
+                <span class="text-brand-500 font-serif italic text-xl">Onze leefgroepen</span>
+                <h2 class="text-4xl md:text-5xl font-serif text-brand-900 mt-2 mb-6">Elke afdeling een eigen karakter</h2>
+            </div>
+
+            <!-- Department 1 -->
+            <div class="flex flex-col md:flex-row items-center gap-12 mb-20 reveal">
+                <div class="w-full md:w-1/2 relative group">
+                    <div class="photo-frame bg-white p-3 shadow-lg rounded-[24px]">
+                        <div class="rounded-[16px] overflow-hidden aspect-video relative">
+                            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Avonturenplein" class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110">
+                            <div class="absolute bottom-4 left-4 bg-white/90 px-3 py-1 rounded-md text-xs font-bold text-brand-800 uppercase tracking-wider">Zelfstandig</div>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Cards -->
-                <div class="lg:w-1/2 flex flex-col gap-6">
-                    <!-- Room 1 -->
-                    <div class="border border-gray-200 rounded-xl p-6 shadow-sm hover:border-brand-300 transition relative overflow-hidden">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <h3 class="font-serif text-2xl font-bold text-gray-800">Comfortkamer</h3>
-                                <span class="text-sm text-gray-500 uppercase tracking-wide">1-Persoons</span>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-2xl font-bold text-brand-600">€60 - €90</p>
-                                <p class="text-xs text-gray-500">per dag</p>
-                            </div>
-                        </div>
-                        <ul class="space-y-2 mb-6 text-gray-600">
-                            <li class="flex items-center"><i data-lucide="bath" class="w-4 h-4 mr-3 text-brand-400"></i> Eigen badkamer</li>
-                            <li class="flex items-center"><i data-lucide="sun" class="w-4 h-4 mr-3 text-brand-400"></i> Comfortabele kamer</li>
-                            <li class="flex items-center"><i data-lucide="archive" class="w-4 h-4 mr-3 text-brand-400"></i> Opbergruimte</li>
-                            <li class="flex items-center"><i data-lucide="lamp" class="w-4 h-4 mr-3 text-brand-400"></i> Ingerichte basisvoorzieningen</li>
-                        </ul>
-                        <button class="w-full border border-brand-600 text-brand-600 font-semibold py-2 rounded-lg hover:bg-brand-600 hover:text-white transition">Bekijk kamer</button>
+                <div class="w-full md:w-1/2 space-y-4 md:pl-6">
+                    <h3 class="text-3xl font-serif text-brand-900">Avonturenplein</h3>
+                    <p class="text-brand-700 leading-relaxed text-lg font-light">
+                        Voor bewoners die grotendeels zelfstandig wonen. Hier ligt de focus op een actieve en sociale omgeving, waar vrijheid en ontmoeting centraal staan.
+                    </p>
+                    <div class="pt-4 flex items-center text-brand-600 font-medium group cursor-pointer">
+                        <span class="border-b border-brand-400 group-hover:text-brand-800 group-hover:border-brand-800 transition-colors">Ontdek deze afdeling</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
                     </div>
+                </div>
+            </div>
 
-                    <!-- Room 2 -->
-                    <div class="border-2 border-brand-200 bg-brand-50/50 rounded-xl p-6 shadow-md relative overflow-hidden">
-                        <div class="absolute top-0 right-0 bg-brand-500 text-white text-xs px-3 py-1 rounded-bl-lg">Populair voor koppels</div>
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <h3 class="font-serif text-2xl font-bold text-gray-800">Duo Kamer</h3>
-                                <span class="text-sm text-gray-500 uppercase tracking-wide">2-Persoons</span>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-2xl font-bold text-brand-600">€100 - €120</p>
-                                <p class="text-xs text-gray-500">per dag</p>
-                            </div>
+            <!-- Department 2 (Reversed) -->
+            <div class="flex flex-col md:flex-row-reverse items-center gap-12 mb-20 reveal">
+                <div class="w-full md:w-1/2 relative group">
+                    <div class="photo-frame bg-white p-3 shadow-lg rounded-[24px]">
+                        <div class="rounded-[16px] overflow-hidden aspect-video relative">
+                            <img src="https://images.unsplash.com/photo-1534349762913-96c22b67bf63?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Hof van Herinneringen" class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110">
+                            <div class="absolute bottom-4 left-4 bg-white/90 px-3 py-1 rounded-md text-xs font-bold text-brand-800 uppercase tracking-wider">Dementiezorg</div>
                         </div>
-                        <ul class="space-y-2 mb-6 text-gray-600">
-                            <li class="flex items-center"><i data-lucide="maximize" class="w-4 h-4 mr-3 text-brand-400"></i> Ruimere kamer</li>
-                            <li class="flex items-center"><i data-lucide="sofa" class="w-4 h-4 mr-3 text-brand-400"></i> Extra leefruimte</li>
-                            <li class="flex items-center"><i data-lucide="users" class="w-4 h-4 mr-3 text-brand-400"></i> Geschikt voor twee personen</li>
-                            <li class="flex items-center"><i data-lucide="accessibility" class="w-4 h-4 mr-3 text-brand-400"></i> Aangepaste badkamer</li>
-                        </ul>
-                        <button class="w-full bg-brand-600 text-white font-semibold py-2 rounded-lg hover:bg-brand-700 transition">Bekijk kamer</button>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2 space-y-4 md:pr-6 text-left md:text-right">
+                    <h3 class="text-3xl font-serif text-brand-900">Hof van Herinneringen</h3>
+                    <p class="text-brand-700 leading-relaxed text-lg font-light">
+                        Een beschermde afdeling voor bewoners met dementie. We bieden structuur, herkenbaarheid en warme begeleiding in een veilige setting.
+                    </p>
+                    <div class="pt-4 flex items-center md:justify-end text-brand-600 font-medium group cursor-pointer">
+                        <span class="border-b border-brand-400 group-hover:text-brand-800 group-hover:border-brand-800 transition-colors">Ontdek deze afdeling</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Department 3 -->
+             <div class="flex flex-col md:flex-row items-center gap-12 reveal">
+                <div class="w-full md:w-1/2 relative group">
+                    <div class="photo-frame bg-white p-3 shadow-lg rounded-[24px]">
+                        <div class="rounded-[16px] overflow-hidden aspect-video relative">
+                            <img src="https://images.unsplash.com/photo-1516733968668-dbdce39c4651?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Zilveren Oase" class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110">
+                            <div class="absolute bottom-4 left-4 bg-white/90 px-3 py-1 rounded-md text-xs font-bold text-brand-800 uppercase tracking-wider">Intensieve Zorg</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2 space-y-4 md:pl-6">
+                    <h3 class="text-3xl font-serif text-brand-900">Zilveren Oase</h3>
+                    <p class="text-brand-700 leading-relaxed text-lg font-light">
+                        Intensieve zorg met nabijheid en comfort voor bewoners met een hogere zorgnood. Hier ligt de focus op medische ondersteuning en palliatief comfort.
+                    </p>
+                    <div class="pt-4 flex items-center text-brand-600 font-medium group cursor-pointer">
+                        <span class="border-b border-brand-400 group-hover:text-brand-800 group-hover:border-brand-800 transition-colors">Ontdek deze afdeling</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"></i>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="bg-brand-900 text-white py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                
-                <!-- Info -->
-                <div>
-                    <h2 class="font-serif text-3xl font-bold mb-6 text-white">Contact & Bezoek</h2>
-                    <p class="text-brand-200 mb-8 max-w-md">
-                        Heeft u vragen of wilt u de sfeer komen opsnuiven? Wij staan klaar om u te verwelkomen.
+    <!-- Pricing: Cozy Cards -->
+    <section id="kamers" class="py-24 bg-cream-50">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl font-serif text-brand-900 mb-4">Kamers & Tarieven</h2>
+                <p class="text-brand-600 text-lg">Transparante prijzen voor een zorgeloze toekomst.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <!-- Card 1 -->
+                <div class="bg-white rounded-[2.5rem] p-8 md:p-12 hover:shadow-xl transition-all duration-300 border border-brand-100 group reveal">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-brand-400">Solo</span>
+                            <h3 class="text-3xl font-serif text-brand-900 mt-2">Comfortkamer</h3>
+                        </div>
+                        <div class="text-right bg-brand-50 px-4 py-2 rounded-xl text-brand-800">
+                            <span class="block text-2xl font-bold">€60-90</span>
+                            <span class="text-xs opacity-70">per dag</span>
+                        </div>
+                    </div>
+                    <p class="text-brand-600 mb-8 font-light">Een perfecte balans tussen privacy en comfort, voorzien van alle moderne gemakken.</p>
+                    <ul class="space-y-4 mb-10">
+                        <li class="flex items-center text-brand-800"><span class="w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center mr-3 text-brand-600"><i data-lucide="check" class="w-3.5 h-3.5"></i></span> Eigen badkamer</li>
+                        <li class="flex items-center text-brand-800"><span class="w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center mr-3 text-brand-600"><i data-lucide="check" class="w-3.5 h-3.5"></i></span> Opbergruimte op maat</li>
+                        <li class="flex items-center text-brand-800"><span class="w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center mr-3 text-brand-600"><i data-lucide="check" class="w-3.5 h-3.5"></i></span> Zicht op de tuin</li>
+                    </ul>
+                    <a href="#contact" class="block w-full text-center py-4 rounded-full border-2 border-brand-200 text-brand-800 font-semibold hover:border-brand-800 hover:bg-brand-800 hover:text-white transition-all">Beschikbaarheid checken</a>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white rounded-[2.5rem] p-8 md:p-12 relative shadow-lg transform md:-translate-y-4 hover:shadow-xl transition-all duration-300 group reveal stagger-delay-1 border-2 border-brand-200">
+                    <div class="absolute top-0 right-10 bg-brand-600 text-white text-xs font-bold px-4 py-2 rounded-b-xl shadow-md">MEEST GEKOZEN</div>
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-brand-400">Samen</span>
+                            <h3 class="text-3xl font-serif text-brand-900 mt-2">Duo Suite</h3>
+                        </div>
+                        <div class="text-right bg-brand-100 px-4 py-2 rounded-xl text-brand-800">
+                            <span class="block text-2xl font-bold">€100-120</span>
+                            <span class="text-xs opacity-70">per dag</span>
+                        </div>
+                    </div>
+                    <p class="text-brand-600 mb-8 font-light">Ruimte en gezelligheid voor koppels die samen willen blijven genieten.</p>
+                    <ul class="space-y-4 mb-10">
+                        <li class="flex items-center text-brand-800"><span class="w-6 h-6 rounded-full bg-brand-200 flex items-center justify-center mr-3 text-brand-700"><i data-lucide="check" class="w-3.5 h-3.5"></i></span> Extra leefruimte</li>
+                        <li class="flex items-center text-brand-800"><span class="w-6 h-6 rounded-full bg-brand-200 flex items-center justify-center mr-3 text-brand-700"><i data-lucide="check" class="w-3.5 h-3.5"></i></span> Aangepaste badkamer</li>
+                        <li class="flex items-center text-brand-800"><span class="w-6 h-6 rounded-full bg-brand-200 flex items-center justify-center mr-3 text-brand-700"><i data-lucide="check" class="w-3.5 h-3.5"></i></span> Kitchenette optie</li>
+                    </ul>
+                    <a href="#contact" class="block w-full text-center py-4 rounded-full bg-brand-800 text-white font-semibold hover:bg-brand-700 transition-colors shadow-lg shadow-brand-200">Beschikbaarheid checken</a>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center reveal">
+                <span class="inline-block px-4 py-2 bg-brand-100 rounded-full text-brand-700 text-sm">
+                    ✨ Ook beschikbaar: Kapper, Pedicure, Kinesitherapie, Logopedie
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact: Warm Footer -->
+    <section id="contact" class="bg-brand-900 text-brand-100 py-24 relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute top-0 right-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-brand-600/30 rounded-full blur-[100px]"></div>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-20">
+                <div class="reveal">
+                    <span class="text-brand-400 font-serif italic text-2xl">Kom langs</span>
+                    <h2 class="text-4xl md:text-5xl font-serif text-white mt-2 mb-8">De koffie staat klaar.</h2>
+                    <p class="text-brand-200 text-lg mb-12 font-light leading-relaxed max-w-md">
+                        Sfeer moet je proeven. Plan een vrijblijvende rondleiding en ontdek of Residentie Amica als thuis voelt voor u.
                     </p>
 
-                    <div class="space-y-6">
-                        <div class="flex items-start">
-                            <div class="bg-brand-800 p-3 rounded-full mr-4">
-                                <i data-lucide="clock" class="w-6 h-6 text-brand-200"></i>
+                    <div class="space-y-8">
+                        <div class="flex items-start gap-6 group">
+                            <div class="w-12 h-12 rounded-full bg-brand-800 flex items-center justify-center text-brand-300 group-hover:bg-brand-700 group-hover:text-white transition-colors border border-brand-700">
+                                <i data-lucide="map-pin" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h4 class="text-lg font-semibold text-brand-100">Openingsuren</h4>
-                                <p class="text-brand-300">Maandag tot vrijdag: 08:00 – 19:00</p>
-                                <p class="text-brand-300">Weekend en feestdagen: 10:00 – 14:00</p>
+                                <h4 class="text-white font-serif text-xl">Adres</h4>
+                                <p class="text-brand-300 mt-1">Avonturenlaan 17<br>1000 Wommelgem</p>
                             </div>
                         </div>
-
-                        <div class="flex items-start">
-                            <div class="bg-brand-800 p-3 rounded-full mr-4">
-                                <i data-lucide="map-pin" class="w-6 h-6 text-brand-200"></i>
+                        <div class="flex items-start gap-6 group">
+                            <div class="w-12 h-12 rounded-full bg-brand-800 flex items-center justify-center text-brand-300 group-hover:bg-brand-700 group-hover:text-white transition-colors border border-brand-700">
+                                <i data-lucide="clock" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h4 class="text-lg font-semibold text-brand-100">Adres</h4>
-                                <p class="text-brand-300">Avonturenlaan 17</p>
-                                <p class="text-brand-300">1000 Wommelgem</p>
+                                <h4 class="text-white font-serif text-xl">Bezoekuren</h4>
+                                <p class="text-brand-300 mt-1">Ma-Vr: 08:00 – 19:00<br>Weekend: 10:00 – 14:00</p>
                             </div>
                         </div>
-
-                        <div class="flex items-start">
-                            <div class="bg-brand-800 p-3 rounded-full mr-4">
-                                <i data-lucide="mail" class="w-6 h-6 text-brand-200"></i>
+                        <div class="flex items-start gap-6 group">
+                            <div class="w-12 h-12 rounded-full bg-brand-800 flex items-center justify-center text-brand-300 group-hover:bg-brand-700 group-hover:text-white transition-colors border border-brand-700">
+                                <i data-lucide="phone" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h4 class="text-lg font-semibold text-brand-100">Contact</h4>
-                                <a href="mailto:info@residentie-amica.be" class="text-brand-300 hover:text-white transition">info@residentie-amica.be</a>
+                                <h4 class="text-white font-serif text-xl">Contact</h4>
+                                <p class="text-brand-300 mt-1 hover:text-white transition-colors"><a href="mailto:info@residentie-amica.be">info@residentie-amica.be</a><br>+32 123 45 67 89</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Contact Form Mockup -->
-                <div class="bg-white/5 p-8 rounded-2xl border border-white/10">
-                    <form class="space-y-4" onsubmit="event.preventDefault(); alert('Bedankt voor uw bericht! We nemen spoedig contact met u op.');">
-                        <div>
-                            <label class="block text-sm font-medium text-brand-200 mb-1">Naam</label>
-                            <input type="text" class="w-full bg-brand-800/50 border border-brand-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-brand-400 placeholder-brand-500/50" placeholder="Uw naam">
+                <!-- Form -->
+                <div class="bg-brand-800/40 backdrop-blur-sm p-8 md:p-10 rounded-[2rem] border border-brand-700/50 reveal stagger-delay-2 shadow-2xl">
+                    <form class="space-y-6" onsubmit="event.preventDefault(); alert('Bedankt! We nemen spoedig contact op.');">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-brand-300 text-sm mb-2 uppercase tracking-wider font-semibold">Voornaam</label>
+                                <input type="text" class="w-full bg-brand-900/40 border border-brand-700 rounded-xl text-white px-4 py-3 focus:outline-none focus:border-brand-400 focus:bg-brand-900/60 transition-colors placeholder-brand-700" placeholder="Uw voornaam">
+                            </div>
+                            <div>
+                                <label class="block text-brand-300 text-sm mb-2 uppercase tracking-wider font-semibold">Achternaam</label>
+                                <input type="text" class="w-full bg-brand-900/40 border border-brand-700 rounded-xl text-white px-4 py-3 focus:outline-none focus:border-brand-400 focus:bg-brand-900/60 transition-colors placeholder-brand-700" placeholder="Uw achternaam">
+                            </div>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-brand-200 mb-1">E-mailadres</label>
-                            <input type="email" class="w-full bg-brand-800/50 border border-brand-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-brand-400 placeholder-brand-500/50" placeholder="uw@email.com">
+                            <label class="block text-brand-300 text-sm mb-2 uppercase tracking-wider font-semibold">Email</label>
+                            <input type="email" class="w-full bg-brand-900/40 border border-brand-700 rounded-xl text-white px-4 py-3 focus:outline-none focus:border-brand-400 focus:bg-brand-900/60 transition-colors placeholder-brand-700" placeholder="uw@email.com">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-brand-200 mb-1">Bericht</label>
-                            <textarea rows="3" class="w-full bg-brand-800/50 border border-brand-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-brand-400 placeholder-brand-500/50" placeholder="Waarmee kunnen we u helpen?"></textarea>
+                            <label class="block text-brand-300 text-sm mb-2 uppercase tracking-wider font-semibold">Bericht</label>
+                            <textarea rows="4" class="w-full bg-brand-900/40 border border-brand-700 rounded-xl text-white px-4 py-3 focus:outline-none focus:border-brand-400 focus:bg-brand-900/60 transition-colors placeholder-brand-700" placeholder="Hoe kunnen we u helpen?"></textarea>
                         </div>
-                        <button type="submit" class="w-full bg-accent hover:bg-accent-dark text-white font-bold py-3 rounded-lg transition transform active:scale-95 shadow-lg">
-                            Neem contact op
-                        </button>
+                        <button class="w-full bg-brand-200 text-brand-900 py-4 rounded-xl font-serif text-lg font-bold hover:bg-white transition-all transform hover:-translate-y-1 shadow-lg hover:shadow-brand-500/20">Verstuur bericht</button>
                     </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-brand-950 text-brand-400 py-8 border-t border-brand-900">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="font-serif italic text-lg mb-4 text-brand-300">
-                "Residentie Amica is een plek waar wonen rust geeft en zorg gebeurt met aandacht."
-            </p>
-            <p class="text-sm opacity-60">© 2024 Residentie Amica. Alle rechten voorbehouden.</p>
+    <footer class="bg-brand-950 text-brand-500 py-12 border-t border-brand-900">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center gap-3 mb-4 md:mb-0 opacity-80 hover:opacity-100 transition-opacity">
+                <div class="w-8 h-8 rounded-full bg-brand-800 flex items-center justify-center">
+                    <i data-lucide="heart" class="w-4 h-4 text-brand-400"></i>
+                </div>
+                <span class="font-serif text-lg text-brand-300">Residentie Amica</span>
+            </div>
+            <p class="text-sm font-light opacity-50">© 2024 Residentie Amica. Alle rechten voorbehouden.</p>
         </div>
     </footer>
 
     <script>
-        // Initialize Lucide Icons
+        // Initialize Icons
         lucide.createIcons();
 
-        // Mobile Menu Toggle
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
+        // Scroll Animation Observer
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
 
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-2');
+                navbar.classList.remove('py-4');
+            } else {
+                navbar.classList.add('py-4');
+                navbar.classList.remove('py-2');
+            }
+        });
+
+        // Mobile Menu
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('translate-x-full');
+            document.body.classList.toggle('overflow-hidden');
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
+        
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', toggleMenu);
         });
     </script>
 </body>
